@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jlj-learning-controller
+  labels:
+    app: jlj-learning-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jlj-learning-controller
+  template:
+    metadata:
+      labels:
+        app: jlj-learning-controller
+    spec:
+      volumes:
+      - name: "jlj-learning-controller-log"
+        hostPath:
+         path: "/Disk/data/tomcat/jlj-learning-controller/log/"
+      containers:
+      - name: jlj-learning-controller
+        image: fushuitong/jlj-learning-controller:v35
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: jlj-learning-controller-log
+          mountPath: /usr/local/tomcat/logs
