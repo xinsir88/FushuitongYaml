@@ -26,6 +26,3 @@ spec:
         volumeMounts:
         - name: jlj-learning-controller-log
           mountPath: /usr/local/tomcat/logs
-        env:
-        - name: ImageVersion
-          value: 
