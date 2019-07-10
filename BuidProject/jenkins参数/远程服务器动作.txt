@@ -1,0 +1,12 @@
+export PorjectName=jlj-learning-controller
+export NumberOfProcesses=`kubectl get deployment | grep ${PorjectName} | wc -l`
+export NewImage=fushuitong/${PorjectName}:v${BUILD_NUMBER}
+export YamlWork=/Disk/Docker/tomcat/${PorjectName}/
+if [ ${NumberOfProcesses} -eq 0 ]; then
+  cd ${YamlWork}
+  wget https://raw.githubusercontent.com/xinsir88/FushuitongYaml/master/${PorjectName}-template.yaml -P ${YamlWork}
+  envsubst < ${PorjectName}-template.yaml > ${PorjectName}.yaml
+  kubectl create -f ${YamlWork}/${PorjectName}.yaml
+else
+  kubectl  set image deployment/${PorjectName} ${PorjectName}=${NewImage}
+fi

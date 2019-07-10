@@ -1,0 +1,21 @@
+# 设置变量
+JenkinsWork=/root/.jenkins/workspace
+DockerWork=/root/docker_dir/tomcat
+PorjectName=jlj-learning-controller
+UserName=xinsir8
+Passwd=xiaoXIN@8023
+ImageName=fushuitong/${PorjectName}:v${BUILD_NUMBER}
+
+# 把war包剪切到docker打包目录下，解压重新压缩成tar.gz包
+if [ ${DockerWork}/${JOB_NAME}/ ]; then
+  mkdir -p ${DockerWork}/${JOB_NAME}/
+  cp ${DockerWork}/template/server.xml ${DockerWork}/${JOB_NAME}/
+  cp ${DockerWork}/template/Dockerfile ${DockerWork}/${JOB_NAME}/
+fi
+mv ${JenkinsWork}/${JOB_NAME}/${PorjectName}/target/${PorjectName}.war ${DockerWork}/${JOB_NAME}/
+cd ${DockerWork}/${JOB_NAME}/
+
+# 登录docker hub，打包，上传镜像到私有仓库
+docker login -u ${UserName} -p ${Passwd}
+docker build -t ${ImageName} .
+docker push ${ImageName}
