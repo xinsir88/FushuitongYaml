@@ -20,9 +20,12 @@ spec:
          path: "/Disk/data/tomcat/jlj-learning-controller/log/"
       containers:
       - name: jlj-learning-controller
-        image: $NewImage
+        image: ${NewImage}
         ports:
         - containerPort: 8080
         volumeMounts:
         - name: jlj-learning-controller-log
           mountPath: /usr/local/tomcat/logs
+        env:
+        - name: ImageVersion
+          value: 
