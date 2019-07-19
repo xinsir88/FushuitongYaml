@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${ProjectName}
+  labels:
+    app: ${ProjectName}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${ProjectName}
+  template:
+    metadata:
+      labels:
+        app: ${ProjectName}
+    spec:
+      volumes:
+      - name: "${ProjectName}-log"
+        hostPath:
+         path: "/Disk/data/tomcat/${ProjectName}/log/"
+      containers:
+      - name: ${ProjectName}
+        image: ${newimage}
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: ${ProjectName}-log
+          mountPath: /usr/local/tomcat/logs
