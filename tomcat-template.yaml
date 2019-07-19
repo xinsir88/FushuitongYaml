@@ -22,7 +22,7 @@ spec:
       - name: ${ProjectName}
         image: ${NewImage}
         ports:
-        - containerPort: 8080
+        - containerPort: 8024
         volumeMounts:
         - name: ${ProjectName}-log
           mountPath: /usr/local/tomcat/logs
