@@ -20,7 +20,7 @@ spec:
          path: "/Disk/data/tomcat/${ProjectName}/log/"
       containers:
       - name: ${ProjectName}
-        image: ${newimage}
+        image: ${NewImage}
         ports:
         - containerPort: 8080
         volumeMounts:
