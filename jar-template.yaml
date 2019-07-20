@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${ProjectName}
+  labels:
+    app: ${ProjectName}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${ProjectName}
+  template:
+    metadata:
+      labels:
+        app: ${ProjectName}
+    spec:
+      volumes:
+      - name: "${ProjectName}-log"
+        hostPath:
+         path: "/Disk/data/jar/${ProjectName}/log/"
+      containers:
+      - name: ${ProjectName}
+        image: ${NewImage}
+        ports:
+        - containerPort: 8024
+        volumeMounts:
+        - name: ${ProjectName}-log
+          mountPath: /usr/local/jar/logs
